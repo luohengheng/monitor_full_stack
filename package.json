@@ -2,22 +2,47 @@
   "name": "monitor_full_stack",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint",
+    "lint:staged": "lint-staged",
+    "commit": "git-cz",
+    "prepare": "husky"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss,md}": [
+      "prettier --write"
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/node": "22.5.5",
-    "typescript": "5.9.3",
+    "@commitlint/cli": "20.2.0",
+    "@commitlint/config-conventional": "20.2.0",
     "@eslint/js": "9.39.1",
-    "globals": "16.5.0",
-    "typescript-eslint": "8.48.1",
-    "eslint-plugin-react-refresh": "0.4.24",
-    "eslint-plugin-react-hooks": "^7.0.1",
+    "@types/node": "22.5.5",
+    "commitizen": "4.3.1",
+    "cz-git": "^1.12.0",
     "eslint-plugin-prettier": "5.5.4",
-    "eslint-plugin-simple-import-sort": "12.1.1"
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "0.4.24",
+    "eslint-plugin-simple-import-sort": "12.1.1",
+    "fast-glob": "3.3.3",
+    "globals": "16.5.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.2.7",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.48.1"
   }
 }
