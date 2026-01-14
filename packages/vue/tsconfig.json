@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ES6", "ES2020"], // 包含 DOM、DOM.Iterable、ES6 和 ES2020 库类型
+    "moduleResolution": "node", // 使用 Node.js 模块解析策略
+    "skipLibCheck": true // 跳过库文件的类型检查，加快编译速度
+  }
+}

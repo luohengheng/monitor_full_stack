@@ -3,11 +3,20 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
+  "packageManager": "pnpm@9.15.4",
   "scripts": {
     "lint": "eslint",
     "lint:staged": "lint-staged",
     "commit": "git-cz",
-    "prepare": "husky"
+    "prepare": "husky",
+    "clean": "run-s clean:build clean:caches",
+    "clean:build": "pnpm --filter @@monitor_full_stack/* clean",
+    "clean:caches": " rimraf .turbo/cache **/*/.turbo",
+    "clean:deps": "rimraf node_modules **/*/node_modules",
+    "clean:all": "run-s clean:build clean:caches clean:deps",
+    "build": "turbo build",
+    "build:watch": "turbo build:watch",
+    "dev": "turbo dev"
   },
   "config": {
     "commitizen": {
@@ -43,6 +52,18 @@
     "husky": "9.1.7",
     "lint-staged": "16.2.7",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.48.1"
+    "typescript-eslint": "8.48.1",
+    "tsup": "8.3.0",
+    "turbo": "2.6.3",
+    "rimraf": "6.1.2",
+    "npm-run-all2": "8.0.4"
+  },
+  "dependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/vue": "^2.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "vue": "^3.0.0"
   }
 }
