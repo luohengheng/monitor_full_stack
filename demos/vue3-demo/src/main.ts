@@ -9,9 +9,9 @@ const app = createApp(App);
 
 // 定义监控配置对象
 const monitorConfig = {
-  dsn: "https://example.com/api/monitor",
-  apikey: "test-api-key",
-  userId: "test-user-123",
+  dsn: import.meta.env.VITE_MONITOR_DSN || "",
+  apikey: import.meta.env.VITE_MONITOR_API_KEY || "",
+  userId: import.meta.env.VITE_MONITOR_USER_ID || "",
   silentXhr: false,
   silentFetch: false,
   silentClick: false,

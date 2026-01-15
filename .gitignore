@@ -36,3 +36,8 @@ dist-ssr
 .devcontainer/data
 .devcontainer/postgresql_data
 .devcontainer/clickhouse_data
+
+# 环境变量文件（保留示例文件）
+.env.development
+.env.production
+!.env.example

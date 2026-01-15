@@ -1,26 +1,7 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue' // 导入 Vue 的 inject API 和响应式 API
+// @ts-ignore - Vetur 对 Vue 3 <script setup> 的支持有限，无法识别自动导出的组件
 import LifecycleTestComponent from './components/LifecycleTestComponent.vue' // 导入生命周期测试组件
-
-// 定义监控配置的默认值（作为 fallback）
-const defaultMonitorConfig = {
-  dsn: 'https://example.com/api/monitor', // 监控数据上报地址
-  apikey: 'test-api-key', // 项目标识
-  userId: 'test-user-123', // 用户ID
-  silentXhr: false, // 是否监控 XHR 请求
-  silentFetch: false, // 是否监控 Fetch 请求
-  silentClick: false, // 是否监控点击事件
-  silentError: false, // 是否监控错误事件
-  silentUnhandledrejection: false, // 是否监控未处理的 Promise 拒绝
-  silentHashchange: false, // 是否监控 hash 路由变化
-  silentHistory: false, // 是否监控 history 路由变化
-  silentPerformance: false, // 是否获取页面性能指标
-  silentWhiteScreen: false, // 是否开启白屏检测
-  silentRecordScreen: false, // 是否开启录屏功能
-  recordScreentime: 10, // 录屏时间间隔（单位：秒）
-  maxBreadcrumbs: 50, // 用户行为最大记录数
-  xhrTimeoutThreshold: 5000 // XHR 请求超时阈值（单位：毫秒）
-}
 
 // 从父组件注入监控配置，如果未提供则使用默认值
 const monitorConfig = inject('monitorConfig', {})

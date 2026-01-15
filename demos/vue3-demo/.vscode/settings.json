@@ -1,0 +1,16 @@
+{
+  // Vetur 配置 - 支持 Vue 3
+  "vetur.experimental.templateInterpolationService": true, // 启用模板插值服务
+  "vetur.validation.template": false, // 关闭模板验证（避免与 Vue 3 语法冲突）
+  "vetur.validation.script": false, // 关闭脚本验证（Vetur 对 Vue 3 <script setup> 支持有限）
+  "vetur.validation.style": true, // 启用样式验证
+  "vetur.useWorkspaceDependencies": true, // 使用工作区依赖
+  "vetur.completion.autoImport": true, // 自动导入
+  // 禁用 Vetur 的诊断功能（避免误报）
+  "vetur.validation.interpolation": false, // 关闭插值验证
+  // TypeScript 配置
+  "typescript.tsdk": "node_modules/typescript/lib", // 指定 TypeScript 版本
+  "typescript.enablePromptUseWorkspaceTsdk": true, // 提示使用工作区 TypeScript
+  // 如果使用 Volar，可以禁用 Vetur
+  "vetur.ignoreProjectWarning": true // 忽略项目警告
+}

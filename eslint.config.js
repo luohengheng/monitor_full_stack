@@ -17,6 +17,7 @@ const ignores = [
   "commitlint.config.js",
   "apps/frontend/monitor/src/components/ui/**/*",
   "packages/browser-utils/src/metrics/**/*",
+  "**/*.vue", // 忽略 Vue 文件，因为需要专门的解析器（vue-eslint-parser）
 ];
 
 const packagesConfig = {
@@ -74,9 +75,9 @@ const backendConfig = {
   },
 };
 
-// Demos 配置（Vue3 和 React18 演示项目）
-const demosConfig = {
-  files: ["demos/**/*.{ts,tsx,vue}"],
+// Demos 配置 - TypeScript/TSX 文件（React18 演示项目）
+const demosTsConfig = {
+  files: ["demos/**/*.{ts,tsx}"],
   languageOptions: {
     globals: {
       ...globals.browser, // 浏览器全局对象
@@ -123,5 +124,5 @@ export default tseslint.config(
   packagesConfig,
   frontendConfig,
   backendConfig,
-  demosConfig,
+  demosTsConfig, // TypeScript/TSX 文件配置
 );
