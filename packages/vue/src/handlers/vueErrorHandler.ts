@@ -1,16 +1,17 @@
-import type { MonitorOptions } from "@monitor_full_stack/core"; // 从 core 包导入监控配置选项类型
-// 导入传输实例获取函数和面包屑管理器
 import {
   BreadcrumbManager,
   getTransport,
   markError,
+  type MonitorOptions,
 } from "@monitor_full_stack/core";
+import type { ComponentPublicInstance } from "vue"; // 从 Vue 导入组件实例公共类型
 
 import type { VueApp } from "../types/types";
 
 // 错误去重机制：存储最近上报的错误，避免重复上报
 const recentErrors = new Map<string, number>(); // 错误指纹 -> 时间戳
 const ERROR_DEDUP_WINDOW = 1000; // 去重时间窗口（1秒内相同错误只上报一次）
+type ComponentInstanceLike = { $options?: unknown; $vnode?: unknown }; // 仅声明我们需要读取的字段，避免 any
 
 /**
  * 生成错误指纹，用于去重
@@ -70,7 +71,11 @@ export function setupVueErrorHandler(
   // 设置 Vue3 的错误处理器
   const originalErrorHandler = app.config.errorHandler; // 保存原有的错误处理器
 
-  app.config.errorHandler = (err: unknown, instance: unknown, info: string) => {
+  app.config.errorHandler = (
+    err: unknown, // Vue 捕获到的错误（未知类型）
+    instance: ComponentPublicInstance | null, // 组件实例（Vue3 标准：可能为 null）
+    info: string, // Vue 提供的错误附加信息
+  ) => {
     // 如果配置了监控错误事件，则上报错误
     if (!options.silentError) {
       // 将错误转换为 Error 对象（如果还不是）
@@ -133,10 +138,10 @@ export function setupVueErrorHandler(
 
         // 尝试从 Vue 组件实例中提取组件信息
         let componentInfo: Record<string, unknown> | null = null;
-        if (instance && typeof instance === "object") {
+        if (instance) {
           try {
             // 尝试获取组件名称和路径
-            const vm = instance as Record<string, unknown>;
+            const vm = instance as unknown as ComponentInstanceLike; // 将组件实例收窄为可安全读取的形状
             componentInfo = {
               $options: vm.$options ? String(vm.$options) : undefined,
               $vnode: vm.$vnode ? String(vm.$vnode) : undefined,

@@ -1,0 +1,34 @@
+# 用来定义 docker compose
+# 用来编排 docker 相关服务
+version: '1'
+
+services:
+    monitor-demo-clickhouse:
+        image: clickhouse:25.10
+        container_name: monitor-demo-clickhouse
+        # 暴露端口
+        ports:
+            - '8123:8123'
+            - '9000:9000'
+        environment:
+            - CLICKHOUSE_USER=lwh
+            - CLICKHOUSE_PASSWORD=lwhclickhouse
+            - CLICKHOUSE_DB=lwh
+        # 数据同步至主机，我要将 docker 虚拟机中的数据同步到服务主机
+        # 挂载，volume
+        volumes:
+            - ./clickhouse_data:/var/lib/clickhouse
+    monitor-demo-postgres:
+        image: postgres:18.1
+        container_name: monitor-demo-postgres
+        # 暴露端口
+        ports:
+            - '5432:5432'  # 左边这个是服务主机的端口，右边docker容器内服务启动端口
+        environment:
+            - POSTGRES_USER=lwh
+            - POSTGRES_DB=postgres
+            # - POSTGRESQL_USERNAME=lwh
+            - POSTGRES_PASSWORD=lwhpostgres
+            # - POSTGRESQL_DATABASE=lwh
+        volumes:
+            - ./postgresql_data:/var/lib/postgresql

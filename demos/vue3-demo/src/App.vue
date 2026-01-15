@@ -4,7 +4,23 @@ import { inject, ref } from 'vue' // 导入 Vue 的 inject API 和响应式 API
 import LifecycleTestComponent from './components/LifecycleTestComponent.vue' // 导入生命周期测试组件
 
 // 从父组件注入监控配置，如果未提供则使用默认值
-const monitorConfig = inject('monitorConfig', {})
+interface MonitorConfig { // 定义监控配置类型（用于模板类型推断）
+  dsn: string // DSN 配置项
+  apikey: string // API Key 配置项
+  userId: string // 用户 ID 配置项
+  recordScreentime: number // 录屏时间间隔（秒）
+  maxBreadcrumbs: number // 最大面包屑数量
+  xhrTimeoutThreshold: number // XHR 超时阈值（毫秒）
+} // 结束接口定义
+
+const monitorConfig = inject<MonitorConfig>('monitorConfig', { // 注入带类型的监控配置，避免推断为 {}
+  dsn: '', // 默认 DSN
+  apikey: '', // 默认 API Key
+  userId: '', // 默认用户 ID
+  recordScreentime: 0, // 默认录屏时间间隔
+  maxBreadcrumbs: 0, // 默认最大面包屑数量
+  xhrTimeoutThreshold: 0, // 默认 XHR 超时阈值
+}) // 结束注入与默认值
 
 // 用于控制子组件显示/隐藏的响应式变量
 const showLifecycleComponent = ref(false) // 控制生命周期测试组件显示状态
