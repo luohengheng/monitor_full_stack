@@ -1,10 +1,15 @@
 import "./index.css";
 
-import { init } from "@monitor_full_stack/react_monitor";
+import {
+  ErrorBoundary,
+  getBreadcrumbManager,
+  init,
+} from "@monitor_full_stack/react_monitor";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import App from "./App.tsx";
+
 const monitorOptions = {
   dsn: import.meta.env.VITE_MONITOR_DSN || "",
   apikey: import.meta.env.VITE_MONITOR_API_KEY || "",
@@ -25,9 +30,15 @@ const monitorOptions = {
 };
 
 init(monitorOptions);
+const breadcrumbManager = getBreadcrumbManager();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App monitorConfig={monitorOptions} />
+    <ErrorBoundary
+      options={monitorOptions}
+      breadcrumbManager={breadcrumbManager}
+    >
+      <App monitorConfig={monitorOptions} />
+    </ErrorBoundary>
   </StrictMode>,
 );

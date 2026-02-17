@@ -1,8 +1,10 @@
-// 导入 Monitor 类和类型定义
-import { Monitor, type MonitorOptions } from "@monitor_full_stack/core"; // 监控核心类和配置选项类型
+import {
+  type BreadcrumbManager,
+  Monitor,
+  type MonitorOptions,
+} from "@monitor_full_stack/core";
 
-// 导入错误边界组件
-import { ErrorBoundary } from "./components/ErrorBoundary"; // React 错误边界组件
+import { ErrorBoundary } from "./components/ErrorBoundary";
 
 /**
  * 初始化 React 监控
@@ -13,10 +15,20 @@ export function init(options: MonitorOptions): void {
   Monitor.init(options);
 }
 
+/**
+ * 获取面包屑管理器（用于 ErrorBoundary 等需要上报上下文的场景）
+ * 需在 init() 之后调用
+ */
+export function getBreadcrumbManager(): BreadcrumbManager {
+  return Monitor.getBreadcrumbManager();
+}
+
 // 导出默认对象
 export default {
   init,
   ErrorBoundary,
+  getBreadcrumbManager,
 };
 
 export type { MonitorOptions };
+export { ErrorBoundary };
